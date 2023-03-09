@@ -4,8 +4,8 @@ const papanSkor = document.querySelector('.papan-skor')
 
 
 let tanahSebelumnya;
-let selesai = false;
-let skor = 0;
+let selesai;
+let skor;
 
 function randomTanah(tanah) {
     const t = Math.floor(Math.random() * tanah.length);
@@ -24,7 +24,7 @@ function randomWaktu(min, max) {
 
 function munculkanTikus() {
     const tRandom = randomTanah(tanah);
-    const wRandom = randomWaktu(300, 800);
+    const wRandom = randomWaktu(800, 1300);
     tRandom.classList.add('muncul');
 
     setTimeout(() => {
@@ -36,15 +36,23 @@ function munculkanTikus() {
     }, wRandom);
 }
 
+// function untuk menentukan durasi permainan
 function mulai() {
+    selesai = false;
+    skor = 0;
+    papanSkor.textContent = 0;
     munculkanTikus();
     setTimeout(() => {
         selesai = true;
-    }, 80000);
+    }, 8000);
 }
 
 function pukul() {
     skor++;
     papanSkor.textContent = skor;
+    this.parentNode.classList.remove('muncul');
 }
 
+tikus.forEach(t => {
+    t.addEventListener('click', pukul);
+});
